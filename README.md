@@ -1,27 +1,26 @@
-# Lv2
+# Lv5
+항해99 주특기 주차 과제
 
-항해99 주특기 2주차 과제
+## 💬 프로젝트 설명
+회원의 정보(나이,취미,소득,직업)에 따라 맞춤형 금융상품(대출,카드)을 추천해주는 금융 플랫폼입니다.
 
-\*\*\*\*구조 변경
-signup - o
-posts - o
-login - o
-likes - o
-comments - 0
+## ✅ 로그인/회원가입
+POST /signup
+POST /login
 
-\*\*\*\*에러 처리
-signup - o
-posts - o
-login - o
-likes - o
-comments - o
+## ✅ 게시글 관리
+GET / posts
+GET / posts/:postId
+POST / posts
+PUT / posts/:postId
+DELETE / posts/:postId
 
-\*\*\*\* 기능 테스트
-signup - o
-posts - o
-login - o
-likes -
-comments - o
+## ✅ 댓글 관리
+GET / posts/:postId/comments
+POST / posts/:postId/comments
+PUT / posts/:postId/comments/:commentId
+DELETE / posts/:postId/comments/:commentId
 
-\*\* 권한 테스트 해야 함 - 이상 무
-\*\*밸리데이션 부분 전부 try catch 로 감싸야 할 듯
+## ✅ 좋아요 관리
+GET / posts/like
+PUT / posts/:postId/like
