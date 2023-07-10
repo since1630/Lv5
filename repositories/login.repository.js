@@ -1,8 +1,9 @@
 const { Users } = require('../models');
 
 class LoginRepository {
-  login = async (nickname) => {
-    await Users.findOne({ where: { nickname } });
+  findUser = async (nickname) => {
+    const user = await Users.findOne({ where: { nickname } });
+    return user;
   };
 }
 

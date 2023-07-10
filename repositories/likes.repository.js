@@ -1,9 +1,8 @@
 const { Users, Posts, Likes } = require('../models');
 const { Op } = require('sequelize');
+const sequelize = require('sequelize');
 class LikesRepository {
   findAllPostLike = async (userId) => {
-    const { userId } = res.locals.user;
-
     const posts = await Posts.findAll({
       attributes: [
         'postId',
@@ -26,21 +25,27 @@ class LikesRepository {
     });
     return posts;
   };
+  // const like = await this.likesService.findLikePost(postId, userId);
+  findUserPost = async (postId) => {
+    const post = await Posts.findOne({ where: { postId } });
+    return post;
+  };
 
-  likePost = async (userId, postId) => {
+  findLikePost = async (userId, postId) => {
     const like = await Likes.findOne({
       where: { [Op.and]: [{ PostId: postId }, { UserId: userId }] },
     });
+
     return like;
   };
 
-  createPost = async (userId, postId) => {
-    return await Likes.create({ UserId: userId, PostId: postId });
+  createLikePost = async (userId, postId) => {
+    await Likes.create({ UserId: userId, PostId: postId });
   };
 
-  deletePost = async (userId, postId) => {
-    return await Likes.destroy({
-      where: { [Op.and]: [{ PostId: postId }, { UserId: userId }] },
+  deleteLikePost = async (userId, postId) => {
+    await Likes.destroy({
+      where: { [Op.and]: [{ UserId: userId }, { PostId: postId }] },
     });
   };
 }

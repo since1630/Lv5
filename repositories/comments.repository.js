@@ -11,7 +11,7 @@ class CommentsRepository {
           attributes: ['nickname'],
         },
       ],
-      where: { [Op.and]: { postId } },
+      where: { PostId: postId },
       order: [['createdAt', 'DESC']],
     });
 
@@ -33,7 +33,7 @@ class CommentsRepository {
   };
 
   updateComment = async (postId, userId, comment, commentId) => {
-    const [isExistCommentUpdate] = await Comments.update(
+    const [checkCommentUpdate] = await Comments.update(
       { comment },
       {
         where: {
@@ -41,39 +41,19 @@ class CommentsRepository {
         },
       }
     );
-    return isExistCommentUpdate;
+
+    return checkCommentUpdate;
   };
 
   deleteComment = async (postId, userId, commentId) => {
-    const isExistCommentDelete = await Comments.destroy({
+    const checkCommentDelete = await Comments.destroy({
       where: {
         [Op.and]: [{ PostId: postId }, { UserId: userId }, { commentId }],
       },
     });
 
-    return isExistCommentDelete;
+    return checkCommentDelete;
   };
 }
 
 module.exports = CommentsRepository;
-
-//     //! 게시물 못 찾을 때 에러(24자리 고정)
-//     const posts = await Posts.findOne({ where: { postId } });
-//     if (!posts) {
-//       return res
-//         .status(404)
-//         .json({ errorMessage: '게시글이 존재하지 않습니다.' });
-//     }
-//     //! 댓글을 못 찾을 때 에러(24자리 고정)
-//     const comments = await Comments.findOne({ where: { commentId } });
-//     if (!comments) {
-//       return res
-//         .status(404)
-//         .json({ errorMessage: '댓글이 존재하지 않습니다.' });
-//     }
-//     //! 권한이 없을 때 (토큰의 유저 아이디 활용)
-//     if (comments.UserId !== userId) {
-//       return res
-//         .status(403)
-//         .json({ errorMessage: '댓글의 수정 권한이 존재하지 않습니다.' });
-//     }
